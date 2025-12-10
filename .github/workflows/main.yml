@@ -1,0 +1,21 @@
+name: CI/CD Pipeline Variant 1
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - run: npm install
+      - run: npm test
+
+  deploy:
+    needs: test  # Цей рядок робить крок послідовним (залежить від успіху test)
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Deployed"
